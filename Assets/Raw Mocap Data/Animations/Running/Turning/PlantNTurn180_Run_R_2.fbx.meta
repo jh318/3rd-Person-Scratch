@@ -173,7 +173,9 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'LeftLeg'
+      : position error = 7.696520 mm\n\t'LeftFoot' : position error = 15.233778 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -190,8 +192,8 @@ ModelImporter:
     - serializedVersion: 16
       name: PlantNTurn180_Run_R_2
       takeName: _74_a_U1_M_P_PlantNTurn180_Run_R_Fb_p180_No_0_PJ_4
-      firstFrame: 78
-      lastFrame: 279
+      firstFrame: 151
+      lastFrame: 224
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -201,7 +203,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1

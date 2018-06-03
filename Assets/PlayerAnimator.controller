@@ -13,43 +13,43 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Vertical
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isMoving
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RunPivot
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RotationDirection
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AngularVelocity
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Speed
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -86,17 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16691877de2b2bf4c9178f815861d6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114495194200311018
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9da2d32079a14b74398d1905ab8b6c4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114518173923520328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,7 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f51edf206a57583499ce96416f856b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runPivotThreshold: 5
 --- !u!114 &114739472359320746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,7 +138,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d19e86167c30dca40aac03fbfeabd7f0, type: 3}
+    m_Motion: {fileID: 7400000, guid: 6badde3f2d0ecea45bbc52e7df6da395, type: 3}
     m_Threshold: -1
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
@@ -158,14 +146,14 @@ BlendTree:
     m_DirectBlendParameter: Horizontal
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: d19e86167c30dca40aac03fbfeabd7f0, type: 3}
+    m_Motion: {fileID: 7400000, guid: 6badde3f2d0ecea45bbc52e7df6da395, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: -1}
     m_TimeScale: 1
     m_CycleOffset: 0.5
     m_DirectBlendParameter: Horizontal
     m_Mirror: 1
-  m_BlendParameter: AngularVelocity
+  m_BlendParameter: RotationDirection
   m_BlendParameterY: Vertical
   m_MinThreshold: -1
   m_MaxThreshold: 1
@@ -202,17 +190,20 @@ AnimatorStateTransition:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: RunPivot
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102976812788271940}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.6
-  m_TransitionOffset: 0
-  m_ExitTime: 0.5
-  m_HasExitTime: 1
+  m_TransitionDuration: 0.4877454
+  m_TransitionOffset: 2.3580132
+  m_ExitTime: 0.6137285
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -233,7 +224,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.05
+  m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.60526335
   m_HasExitTime: 0
@@ -369,32 +360,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &1102506309705202718
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: RunPivot
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours:
-  - {fileID: 114495194200311018}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfbd52e9b98208e479c69eea769c3a2c, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102976812788271940
 AnimatorState:
   serializedVersion: 5
@@ -440,9 +405,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102027497497067828}
     m_Position: {x: 264, y: 24, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1102506309705202718}
-    m_Position: {x: 180, y: -216, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102201541304979046}
     m_Position: {x: 540, y: -144, z: 0}

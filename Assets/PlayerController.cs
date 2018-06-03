@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour {
 	public float RotationDirection{
 		get {return rotationDirection;}
 	}
+	public Vector3 Axis{
+		get {return axis;}
+	}
 
 	public float maxTurnSpeed = 200.0f;
 	public float maxSpeed = 10.0f;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour {
 
 	Camera cam;
 	Vector3 targetDirection;
+	Vector3 axis;
 
 	void Start(){
 		cam = Camera.main;
@@ -60,7 +64,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Rotation(){
-		Vector3 axis = new Vector3(horizontalRaw, 0.0f, verticalRaw);
+		axis = new Vector3(horizontalRaw, 0.0f, verticalRaw);
 		targetDirection = (cam.transform.forward * axis.z + cam.transform.right * axis.x);
 		Vector3 forwardToTargetCross = Vector3.Cross(transform.forward, targetDirection);
 		float rotation = forwardToTargetCross.y;

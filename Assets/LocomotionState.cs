@@ -6,7 +6,9 @@ public class LocomotionState : StateMachineBehaviour {
 
 	PlayerController player;
 	Rigidbody body;
-	public float runPivotThreshold = 4.0f;
+	Vector3 lastAxis;
+	float lastHorizontal;
+	float lastVertical;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
@@ -20,20 +22,28 @@ public class LocomotionState : StateMachineBehaviour {
 		animator.SetFloat("Vertical", player.Vertical);
 		animator.SetFloat("RotationDirection", player.RotationDirection);
 		//animator.SetFloat("AngularVelocity", animator.gameObject.GetComponent<Rigidbody>().angularVelocity));
-		animator.SetFloat("Speed", body.velocity.z);
+		animator.SetFloat("Speed", Mathf.Abs(body.velocity.z));
 
-		if(Mathf.Abs(animator.GetFloat("Horizontal")) < 0.1f && Mathf.Abs(animator.GetFloat("Vertical")) < 0.1f
-		&& player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f){
+		// if(Mathf.Abs(animator.GetFloat("Horizontal")) < 0.1f && Mathf.Abs(animator.GetFloat("Vertical")) < 0.1f
+		// && player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f){
+		// 	animator.SetBool("isMoving", false);
+		// }
+
+		if(player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f
+		&& lastAxis == Vector3.zero){
 			animator.SetBool("isMoving", false);
 		}
 
+
 		if(Mathf.Abs(Vector3.Dot(player.transform.forward, player.TargetDirection)) == 0.0f){
 			animator.SetBool("RunPivot", true);
+			animator.SetBool("isMoving", true);
 			Debug.Log(Vector3.Dot(player.transform.forward, player.TargetDirection));
-			animator.SetFloat("Horizontal", player.HorizontalRaw);
-			animator.SetFloat("Vertical", player.VerticalRaw);
 		}
 
+		lastHorizontal = player.Horizontal;
+		lastVertical = player.Vertical;
+		lastAxis = player.Axis;
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
