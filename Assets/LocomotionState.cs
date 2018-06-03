@@ -5,25 +5,35 @@ using UnityEngine;
 public class LocomotionState : StateMachineBehaviour {
 
 	PlayerController player;
+	Rigidbody body;
+	public float runPivotThreshold = 4.0f;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+			body = animator.gameObject.GetComponent<Rigidbody>();
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		animator.SetFloat("Horizontal", player.Horizontal);
 		animator.SetFloat("Vertical", player.Vertical);
-		animator.SetFloat("Speed", player.TargetVelocity.z);
-		animator.SetFloat("AngularVelocity", player.AngularVelocity);
+		animator.SetFloat("RotationDirection", player.RotationDirection);
+		//animator.SetFloat("AngularVelocity", animator.gameObject.GetComponent<Rigidbody>().angularVelocity));
+		animator.SetFloat("Speed", body.velocity.z);
 
-		if(Mathf.Abs(animator.GetFloat("Horizontal")) > 0.0f || Mathf.Abs(animator.GetFloat("Vertical")) > 0.0f){
-			animator.SetBool("isMoving", true);
-		}
-		else{
+		if(Mathf.Abs(animator.GetFloat("Horizontal")) < 0.1f && Mathf.Abs(animator.GetFloat("Vertical")) < 0.1f
+		&& player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f){
 			animator.SetBool("isMoving", false);
 		}
+
+		if(Mathf.Abs(Vector3.Dot(player.transform.forward, player.TargetDirection)) == 0.0f){
+			animator.SetBool("RunPivot", true);
+			Debug.Log(Vector3.Dot(player.transform.forward, player.TargetDirection));
+			animator.SetFloat("Horizontal", player.HorizontalRaw);
+			animator.SetFloat("Vertical", player.VerticalRaw);
+		}
+
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state

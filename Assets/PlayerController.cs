@@ -23,8 +23,11 @@ public class PlayerController : MonoBehaviour {
 	public float AngularVelocity{
 		get{return angularVelocity;}
 	}
-	public Vector3 TargetVelocity{
-		get {return targetVelocity;}
+	public Vector3 TargetDirection{
+		get {return targetDirection;}
+	}
+	public float RotationDirection{
+		get {return rotationDirection;}
 	}
 
 	public float maxTurnSpeed = 200.0f;
@@ -37,9 +40,10 @@ public class PlayerController : MonoBehaviour {
 
 	float speed;
 	float angularVelocity;
+	float rotationDirection;
 
 	Camera cam;
-	Vector3 targetVelocity;
+	Vector3 targetDirection;
 
 	void Start(){
 		cam = Camera.main;
@@ -52,11 +56,12 @@ public class PlayerController : MonoBehaviour {
 		verticalRaw = Input.GetAxisRaw("Vertical");
 
 		Rotation();
+
 	}
 
 	void Rotation(){
 		Vector3 axis = new Vector3(horizontalRaw, 0.0f, verticalRaw);
-		Vector3 targetDirection = (cam.transform.forward * axis.z + cam.transform.right * axis.x);
+		targetDirection = (cam.transform.forward * axis.z + cam.transform.right * axis.x);
 		Vector3 forwardToTargetCross = Vector3.Cross(transform.forward, targetDirection);
 		float rotation = forwardToTargetCross.y;
 		
@@ -64,6 +69,7 @@ public class PlayerController : MonoBehaviour {
 			rotation = Mathf.Sign(rotation);
 		}
 
-		transform.eulerAngles += Vector3.up * rotation * maxSpeed * Time.deltaTime;
+		transform.eulerAngles += Vector3.up * rotation * maxTurnSpeed * Time.deltaTime;
+		rotationDirection = Mathf.Sign(rotation);
 	}
 }
