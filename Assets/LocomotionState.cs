@@ -10,10 +10,13 @@ public class LocomotionState : StateMachineBehaviour {
 	float lastHorizontal;
 	float lastVertical;
 
+	public float speedToRunStop = 2.5f;
+
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 			player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 			body = animator.gameObject.GetComponent<Rigidbody>();
+			animator.SetBool("isMoving", true);
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,24 +25,44 @@ public class LocomotionState : StateMachineBehaviour {
 		animator.SetFloat("Vertical", player.Vertical);
 		animator.SetFloat("RotationDirection", player.RotationDirection);
 		//animator.SetFloat("AngularVelocity", animator.gameObject.GetComponent<Rigidbody>().angularVelocity));
-		animator.SetFloat("Speed", Mathf.Abs(body.velocity.z));
+		animator.SetFloat("SpeedX", body.velocity.z);
+		animator.SetFloat("SpeedZ", body.velocity.x);
 
-		// if(Mathf.Abs(animator.GetFloat("Horizontal")) < 0.1f && Mathf.Abs(animator.GetFloat("Vertical")) < 0.1f
-		// && player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f){
+		// if(player.Axis == Vector3.zero 
+		// && Mathf.Abs(animator.GetFloat("SpeedX")) < speedToRunStop
+		// && Mathf.Abs(animator.GetFloat("SpeedZ")) < speedToRunStop)
+		// {
 		// 	animator.SetBool("isMoving", false);
 		// }
 
-		if(player.HorizontalRaw == 0.0f && player.VerticalRaw == 0.0f
-		&& lastAxis == Vector3.zero){
+	
+
+		if(Mathf.Abs(animator.GetFloat("Horizontal")) < 0.1f
+		&& Mathf.Abs(animator.GetFloat("Vertical")) < 0.1f)
+		{
 			animator.SetBool("isMoving", false);
 		}
 
-
-		if(Mathf.Abs(Vector3.Dot(player.transform.forward, player.TargetDirection)) == 0.0f){
-			animator.SetBool("RunPivot", true);
-			animator.SetBool("isMoving", true);
+		if(Vector3.Dot(player.transform.forward, player.TargetDirection) <= -0.93f)
+		{
 			Debug.Log(Vector3.Dot(player.transform.forward, player.TargetDirection));
+			animator.SetBool("RunPivot", true);
 		}
+
+		// if(Mathf.Abs(player.Rotation) == 1.0f)
+		// {
+		// 	animator.SetBool("RunPivot", true);
+		// }
+
+		// if(Vector3.Dot(player.transform.forward, player.TargetDirection) <= -0.9f){
+		// 	Debug.Log(Vector3.Dot(player.transform.forward, player.TargetDirection));
+		// }
+		//Debug.Log(Vector3.Dot(player.transform.forward, player.TargetDirection));
+
+		// if(player.Axis == Vector3.zero){
+		// 	animator.SetBool("RunPivot", false);
+		// }
+
 
 		lastHorizontal = player.Horizontal;
 		lastVertical = player.Vertical;
